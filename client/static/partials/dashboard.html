@@ -1,40 +1,65 @@
 <style>
 	.product_box {
 		border: 1px solid #000;
-		height: 150px;
-		width: 100px;
+		height: 80px;
+		width: 120px;
 		margin: 5px;
+		padding: 10px;
 		display: inline-block;
 		vertical-align: top;
 	}
-	img {
-		height: 50px;
-		width: 50px;
-	}
+	#filter_input, #more_products {
+		margin-left: 5px;
+	} 
+
 </style>
 
 <div ng-controller = 'DashboardsController.js'>
-	<input type = 'text' placeholder = 'Filter...' ng-model = 'filter_name'>
-	<div id = 'five_prods'>
-		<div ng-repeat = 'product in products | filter:filter_name | limitTo:5 track by $index' class = 'product_box'>
-			<img>
-			<p ng-bind = 'product.name'></p>
-			<p>({{product.quantity}} left)</p>
+
+	<nav class = 'navbar navbar-default'>
+		<div class = 'container-fluid'>
+			<ul class="nav navbar-nav">
+                <li class = 'active'>
+                    <a href="#/">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/#products">Products</a>
+                </li>
+                <li>
+                    <a href="#/orders">Orders</a>
+                </li>
+                <li>
+                    <a href="#/customers">Customers</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class = 'container-fluid'>
+    	<h3>Featured Products</h3>
+		<input id = 'filter_input' type = 'text' placeholder = 'Filter...' ng-model = 'filter_name'>
+		<div id = 'five_prods'>
+			<div ng-repeat = 'product in products | filter:filter_name | limitTo:5 track by $index' class = 'product_box text-center'>
+				<p ng-bind = 'product.name'></p>
+				<p>({{product.quantity}} left)</p>
+			</div>
+			<p id = "more_products"><a href = '#/products'>Show All Products</a></p>
 		</div>
-		<a href = '#/products'>Show More</a>
+		<div id = 'three_orders'>
+			<h4>Recent Orders</h4>
+			<p ng-repeat = "order in orders | orderBy:createdAt:true | limitTo:3 track by $index">
+				{{order._customer.name}} has purchased {{order.quantity}} {{order._product.name}}(s) ({{order.createdAt | date: 'longDate'}}).
+			</p>
+			<a href = '#/orders'>Show All Orders</a>
+		</div>
+		<div id = 'three_customers'>
+			<h4>New Customers</h4>
+			<p ng-repeat = "customer in customers | orderBy:createdAt:true | limitTo:3 track by $index">
+				{{customer.name}} has joined the store. ({{customer.createdAt | date: 'longDate'}})
+			</p>
+			<a href = '#/customers'>Show All Customers</a>
+		</div>
 	</div>
-	<div id = 'three_orders'>
-		<h4>Recent Orders</h4>
-		<p ng-repeat = "order in orders | orderBy:createdAt:true | limitTo:3 track by $index">
-			{{order._customer.name}} has purchased {{order.quantity}} {{order._product.name}}(s) ({{order.createdAt | date: 'longDate'}}).
-		</p>
-		<a href = '#/orders'>Show All Orders</a>
-	</div>
-	<div id = 'three_customers'>
-		<h4>New Customers</h4>
-		<p ng-repeat = "customer in customers | orderBy:createdAt:true | limitTo:3 track by $index">
-			{{customer.name}} has joined the store. ({{customer.createdAt | date: 'longDate'}})
-		</p>
-		<a href = '#/customers'>Show All Customers</a>
-	</div>
+
 </div>

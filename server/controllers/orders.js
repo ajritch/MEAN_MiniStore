@@ -22,9 +22,9 @@ module.exports = (function() {
 			Product.findOne({_id: order._product}).exec(function(err, prod) {
 				if (err) {
 					console.log(err);
-				} else if (prod.quantity == 0) {
+				} else if (prod && prod.quantity == 0) {
 					res.json({quant_error: "Sorry, " + prod.name + " is out of stock."});
-				} else if (prod.quantity < order.quantity) {
+				} else if (prod && prod.quantity < order.quantity) {
 					res.json({quant_error: "Quantity too large: only " + prod.quantity + " " + prod.name + "(s) left in stock."});
 				} else {
 					//save the order

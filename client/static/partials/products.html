@@ -1,39 +1,65 @@
 <style>
 	.product_box {
 		border: 1px solid #000;
-		height: 150px;
-		width: 100px;
+		height: 80px;
+		width: 120px;
 		margin: 5px;
+		padding: 10px;
 		display: inline-block;
 		vertical-align: top;
-	}
-	img {
-		height: 50px;
-		width: 50px;
 	}
 </style>
 
 <div ng-controller = 'ProductsController'>
-	<h4>Add a new product</h4>
-	<p ng-repeat = 'error in errors' ng-bind = 'error'></p>
-	<form ng-submit = 'add()'>
-		<label>Name:</label>
-		<input type = 'text' ng-model = 'newProduct.name' placeholder = 'name'>
-		<label>Image (url):</label>
-		<input type = 'text' ng-model = 'newProduct.url' placeholder = 'http://'>
-		<label>Description:</label>
-		<textarea ng-model = 'newProduct.description'></textarea>
-		<label>Initial Quantity:</label>
-		<select ng-model = 'newProduct.quantity' ng-options = 'n for n in [] | range:1:50'>
-			<option value = '' disabled>0</option>
-		</select>
-		<input type = 'submit' value = 'Add Product'>
-	</form>
 
-	<input type = 'text' ng-model = 'filter_name' placeholder = 'Filter...'>
-	<div ng-repeat = 'product in products | filter:filter_name track by $index' class = 'product_box'>
-		<img>
-		<p ng-bind = 'product.name'></p>
-		<p>({{product.quantity}} left)</p>
+	<nav class = 'navbar navbar-default'>
+		<div class = 'container-fluid'>
+			<ul class="nav navbar-nav">
+                <li>
+                    <a href="#/">Dashboard</a>
+                </li>
+                <li class = 'active'>
+                    <a href="/#products">Products</a>
+                </li>
+                <li>
+                    <a href="#/orders">Orders</a>
+                </li>
+                <li>
+                    <a href="#/customers">Customers</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class = 'container-fluid'>
+		<h3>Add a new product</h3>
+		<p class = 'text-danger' ng-repeat = 'error in errors' ng-bind = 'error'></p>
+		<form ng-submit = 'add()' class = 'col-md-6'>
+			<label>Name:</label>
+			<input class = 'form-control' type = 'text' ng-model = 'newProduct.name' placeholder = 'name'>
+			<label>Description:</label>
+			<textarea class = 'form-control' ng-model = 'newProduct.description'></textarea>
+			<div class = 'form-group'>
+				<label>Initial Quantity:</label>
+				<select class = 'form-control' ng-model = 'newProduct.quantity' ng-options = 'n for n in [] | range:1:51'>
+					<option value = '' disabled>0</option>
+				</select>
+			</div>
+			<input type = 'submit' value = 'Add Product' class = 'btn btn-primary pull-right'>
+		</form>
+
+		<div class = 'col-md-10'>
+			<h3>All Products</h3>
+			<input type = 'text' ng-model = 'filter_name' placeholder = 'Filter...'>
+			<div class = 'container-fluid'>
+				<div ng-repeat = 'product in products | filter:filter_name track by $index' class = 'product_box text-center'>
+					<p ng-bind = 'product.name'></p>
+					<p>({{product.quantity}} left)</p>
+				</div>
+			</div>
+		</div>
+
+		
 	</div>
+
 </div>
